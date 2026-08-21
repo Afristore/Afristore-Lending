@@ -4,7 +4,7 @@ NFT-collateralized lending protocol for the [Afristore Marketplace](https://gith
 
 ---
 
-## 📖 Product Summary
+##  Product Summary
 
 A **lender** escrows an NFT into the contract with a declared value and interest terms.
 A **borrower** posts over-collateralized fungible assets (whitelisted stablecoins / wBTC / wETH)
