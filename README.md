@@ -228,3 +228,4 @@ stellar contract deploy --wasm target/wasm32-unknown-unknown/release/soroban_len
 
 MIT — see [LICENSE](./LICENSE)
 # bounty-fix-ref: https://github.com/Afristore/Afristore-Lending/issues/9
+# bounty-fix-ref: https://github.com/Afristore/Afristore-Lending/issues/9
