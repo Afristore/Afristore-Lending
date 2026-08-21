@@ -1,7 +1,6 @@
 # Afristore-Lending
 
 NFT-collateralized lending protocol for the [Afristore Marketplace](https://github.com/Afristore/marketplace).
-Companion to `contracts/soroban-marketplace` and the launchpad, following the same Soroban/Rust structure.
 
 ---
 
@@ -22,7 +21,7 @@ Oracle (Reflector) is only ever used to price **collateral currencies** (USDC/US
 
 ---
 
-## 🏗️ Module Layout
+##  Module Layout
 
 ```
 contracts/soroban-lending/
@@ -40,7 +39,7 @@ contracts/soroban-lending/
 
 ---
 
-## 📦 Data Types
+##  Data Types
 
 ```rust
 #[contracttype]
@@ -99,7 +98,7 @@ pub struct PlatformConfig {
 
 ---
 
-## 🔑 Storage Keys
+##  Storage Keys
 
 ```rust
 DataKey::Config
@@ -112,7 +111,7 @@ DataKey::WhitelistedCurrency(Address)  // -> Reflector asset symbol/identifier
 
 ---
 
-## 🔌 Entrypoints
+##  Entrypoints
 
 | Function | Auth | Description |
 |---|---|---|
@@ -130,7 +129,7 @@ DataKey::WhitelistedCurrency(Address)  // -> Reflector asset symbol/identifier
 
 ---
 
-## 📐 Interest Accrual (Per-Month Schedule)
+##  Interest Accrual (Per-Month Schedule)
 
 ```
 accrued_usd(position, now):
@@ -151,7 +150,7 @@ accrued_usd(position, now):
 
 ---
 
-## ⚡ Health Factor
+##  Health Factor
 
 ```
 health_factor_bps = collateral_usd_value * 10000 / (declared_price_usd + accrued_interest_usd)
@@ -164,7 +163,7 @@ health_factor_bps = collateral_usd_value * 10000 / (declared_price_usd + accrued
 
 ---
 
-## 💸 Settlement Waterfall (shared by `return_nft` + `liquidate`)
+##  Settlement Waterfall (shared by `return_nft` + `liquidate`)
 
 ```
 owed_usd          = declared_price_usd + accrued_interest_usd
@@ -182,7 +181,7 @@ borrower_remainder = collateral_amount - debit_tokens  // floor at 0
 
 ---
 
-## ⚠️ Known Risks (be explicit)
+##  Known Risks 
 
 1. **NFT out of contract control once borrowed.** If a borrower resells or moves the NFT mid-term, there is no on-chain reclaim path. Lender's protection is collateral sizing — enforced platform bounds on buffer/threshold exist precisely to prevent thin buffers that can't absorb price moves.
 2. **Oracle staleness/manipulation on collateral.** `max_price_staleness_secs` must hard-reject stale Reflector reads. Prefer Reflector's TWAP feed over latest-trade. Direct lesson from the Blend exploit.
@@ -191,7 +190,7 @@ borrower_remainder = collateral_amount - debit_tokens  // floor at 0
 
 ---
 
-## 🚀 Getting Started (once code is populated)
+##  Getting Started 
 
 ```bash
 cargo build --target wasm32-unknown-unknown --release
@@ -204,7 +203,7 @@ stellar contract deploy --wasm target/wasm32-unknown-unknown/release/soroban_len
 
 ---
 
-## 🔧 Prerequisites
+##  Prerequisites
 
 - Rust (stable)
 - `wasm32-unknown-unknown` target: `rustup target add wasm32-unknown-unknown`
@@ -212,7 +211,7 @@ stellar contract deploy --wasm target/wasm32-unknown-unknown/release/soroban_len
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork this repository
 2. Create a feature branch: `git checkout -b feat/your-feature`
