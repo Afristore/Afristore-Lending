@@ -8,9 +8,11 @@ use soroban_sdk::{contract, contractimpl, Env};
 /// The `#[contract]` attribute also registers the Soroban panic handler,
 /// which is required for `#![no_std]` WASM builds.
 #[contract]
+#[allow(dead_code)]
 pub struct LendingContract;
 
 #[contractimpl]
+#[allow(dead_code)]
 impl LendingContract {
     /// Placeholder so the crate compiles while the contract is being built.
     /// Remove this once the real entrypoints are in place.
