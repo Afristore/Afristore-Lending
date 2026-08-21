@@ -1,12 +1,7 @@
 # Afristore-Lending
 
-> **🔴 Priority:** Critical | **Difficulty:** Hard | **Estimated Effort:** 5–7 days
-> **Labels:** `smart-contract`, `soroban`, `lending`, `defi`, `priority:critical`
-> **Tracked in:** [ui-ux-issues.md — Issue 126](https://github.com/Afristore/marketplace/blob/master/ui-ux-issues.md)
-
 NFT-collateralized lending protocol for the [Afristore Marketplace](https://github.com/Afristore/marketplace).
 Companion to `contracts/soroban-marketplace` and the launchpad, following the same Soroban/Rust structure.
-Proposed monorepo path: `contracts/soroban-lending/`.
 
 ---
 
