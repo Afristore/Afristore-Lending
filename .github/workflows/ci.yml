@@ -1,0 +1,41 @@
+name: Soroban CI
+
+on:
+  push:
+    branches: ["master", "main"]
+  pull_request:
+    branches: ["**"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  contracts:
+    name: Build and Test Contracts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          # wasm32-unknown-unknown is the correct target for soroban-sdk 25.x
+          targets: wasm32-unknown-unknown
+          components: rustfmt, clippy
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Check Formatting
+        run: cargo fmt --check
+
+      - name: Run Clippy (fail on warnings)
+        run: cargo clippy -- -D warnings
+
+      - name: Build WASM
+        run: cargo build --target wasm32-unknown-unknown --release
+
+      - name: Run Tests
+        run: cargo test --features testutils
