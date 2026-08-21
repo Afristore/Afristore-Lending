@@ -9,7 +9,6 @@
 // dedicated issue in issues.md at the repository root.
 //
 
-
 mod types;
 
 mod storage;

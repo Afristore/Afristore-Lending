@@ -2,7 +2,6 @@
 // contract.rs — Afristore NFT Lending contract implementation
 //
 
-
 use soroban_sdk::{contract, contractimpl, Env};
 
 /// NFT lending contract — replace this stub with the full implementation.
@@ -13,8 +12,6 @@ pub struct LendingContract;
 
 #[contractimpl]
 impl LendingContract {
-
-
     /// Placeholder so the crate compiles while the contract is being built.
     /// Remove this once the real entrypoints are in place.
     pub fn placeholder(_env: Env) -> u32 {

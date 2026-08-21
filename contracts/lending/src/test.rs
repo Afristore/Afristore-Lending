@@ -4,7 +4,6 @@
 // test.rs — Afristore NFT Lending contract tests
 //
 
-
 use soroban_sdk::Env;
 
 use crate::contract::LendingContract;
