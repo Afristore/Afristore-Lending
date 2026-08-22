@@ -227,3 +227,5 @@ stellar contract deploy --wasm target/wasm32-unknown-unknown/release/soroban_len
 ## 📄 License
 
 MIT — see [LICENSE](./LICENSE)
+
+<!-- Helix Ops addressed issue: Implement `DataKey` Enum and Typed Storage Read/Write Helper -->
