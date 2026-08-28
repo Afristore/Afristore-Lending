@@ -1,5 +1,5 @@
-use soroban_sdk::{contractclient, contracttype, Env, Symbol};
 use crate::types::PlatformConfig;
+use soroban_sdk::{contractclient, contracttype, Env, Symbol};
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -16,14 +16,14 @@ pub trait ReflectorOracle {
 pub fn get_price(env: &Env, config: &PlatformConfig, asset_symbol: Symbol) -> i128 {
     let client = ReflectorClient::new(env, &config.oracle_address);
     let price_data_opt = client.lastprice(&asset_symbol);
-    
+
     if price_data_opt.is_none() {
         panic!("Oracle price not found for asset");
     }
-    
+
     let price_data = price_data_opt.unwrap();
     let current_time = env.ledger().timestamp();
-    
+
     if current_time >= price_data.timestamp {
         let age = current_time - price_data.timestamp;
         if age > config.max_price_staleness_secs {
@@ -32,7 +32,7 @@ pub fn get_price(env: &Env, config: &PlatformConfig, asset_symbol: Symbol) -> i1
     } else {
         panic!("Oracle price timestamp in the future");
     }
-    
+
     price_data.price
 }
 
@@ -50,10 +50,12 @@ pub fn usd_to_token_amount(usd: i128, price: i128, decimals: u32) -> i128 {
     if usd == 0 {
         return 0;
     }
-    
+
     let multiplier: i128 = 10_i128.pow(decimals);
-    
-    let numerator = usd.checked_mul(multiplier).expect("Overflow in usd_to_token multiplication");
+
+    let numerator = usd
+        .checked_mul(multiplier)
+        .expect("Overflow in usd_to_token multiplication");
     numerator / price
 }
 
@@ -72,19 +74,21 @@ pub fn token_to_usd(tokens: i128, price: i128, decimals: u32) -> i128 {
     if tokens == 0 {
         return 0;
     }
-    
+
     let divisor: i128 = 10_i128.pow(decimals);
-    
-    let numerator = tokens.checked_mul(price).expect("Overflow in token_to_usd multiplication");
+
+    let numerator = tokens
+        .checked_mul(price)
+        .expect("Overflow in token_to_usd multiplication");
     numerator / divisor
 }
 
 #[cfg(test)]
 mod test {
     use super::*;
-    use soroban_sdk::testutils::{Ledger, Address as _};
-    use soroban_sdk::{Env, Address};
     use crate::types::PlatformConfig;
+    use soroban_sdk::testutils::{Address as _, Ledger};
+    use soroban_sdk::{Address, Env};
 
     #[soroban_sdk::contract]
     pub struct MockOracle;
@@ -112,13 +116,13 @@ mod test {
     fn test_usd_to_token_amount() {
         let amount = usd_to_token_amount(50_000_000, 10_000_000, 7);
         assert_eq!(amount, 50_000_000);
-        
+
         let amount_eth = usd_to_token_amount(10_000_000_000, 20_000_000_000, 18);
         assert_eq!(amount_eth, 500_000_000_000_000_000);
 
         assert_eq!(usd_to_token_amount(0, 10_000_000, 7), 0);
     }
-    
+
     #[test]
     #[should_panic(expected = "Invalid price")]
     fn test_usd_to_token_zero_price() {
@@ -136,15 +140,15 @@ mod test {
     fn test_usd_to_token_overflow() {
         usd_to_token_amount(i128::MAX, 1, 18);
     }
-    
+
     #[test]
     fn test_token_to_usd() {
         let usd = token_to_usd(50_000_000, 10_000_000, 7);
         assert_eq!(usd, 50_000_000);
-        
+
         let usd_eth = token_to_usd(500_000_000_000_000_000, 20_000_000_000, 18);
         assert_eq!(usd_eth, 10_000_000_000);
-        
+
         assert_eq!(token_to_usd(0, 10_000_000, 7), 0);
     }
 
