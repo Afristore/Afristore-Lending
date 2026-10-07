@@ -13,13 +13,13 @@ pub mod types;
 
 pub mod storage;
 
-mod oracle;
+pub mod oracle;
 
 mod interest;
 
 mod events;
 
-mod settlement;
+pub mod settlement;
 
 mod contract;
 
